@@ -11,9 +11,10 @@ import Progress from './components/Progress';
 import FinishScreen from './components/FinishScreen';
 import Footer from './components/Footer';
 import Timer from './components/Timer';
+import { data } from './data.js';
 const initialState = {
-  questions: [],
-  status: 'loading',
+  questions: data,
+  status: 'ready',
   index: 0,
   answer: null,
   points: 0,
@@ -50,7 +51,7 @@ function reducer(state, action) {
         ...state,
         status: 'finished',
         highscore:
-          state.points > state.highScore
+          state.points > state.highscore
             ? state.points
             : state.highscore,
       };
@@ -90,14 +91,15 @@ function App() {
     numQuestions > 0
       ? questions.reduce((prev, cur) => prev + cur.points, 0)
       : '200';
-  useEffect(() => {
-    fetch('http://localhost:8000/questions')
-      .then((response) => response.json())
-      .then((data) =>
-        dispatch({ type: 'dataRecieved', payload: data })
-      )
-      .catch((error) => dispatch({ type: 'dataFailed' }));
-  }, []);
+
+  // useEffect(() => {
+  //   fetch('http://localhost:8000/questions')
+  //     .then((response) => response.json())
+  //     .then((data) =>
+  //       dispatch({ type: 'dataRecieved', payload: data })
+  //     )
+  //     .catch((error) => dispatch({ type: 'dataFailed' }));
+  // }, []);
 
   return (
     <div className="app">
